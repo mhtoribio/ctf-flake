@@ -42,7 +42,9 @@
                 python311Packages.tqdm
                 python311Packages.z3
                 python311Packages.ropper
+                (import ./upload-kernel-exploit.nix { inherit pkgs; })
             ];
+
         };
       };
   }
