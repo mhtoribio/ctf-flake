@@ -40,6 +40,7 @@
           python311Packages.ropper
           (import ./upload-kernel-exploit.nix { inherit pkgs; })
           (import ./gdb-splitmind.nix { inherit pkgs stdenv; })
+          (import ./pwninit.nix { inherit pkgs stdenv; })
         ];
 
       };
