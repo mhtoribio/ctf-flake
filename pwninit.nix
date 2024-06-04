@@ -21,7 +21,7 @@ let
     		io = remote("localhost", 13337)
     	else:
     		io = process({proc_args})
-    		pyperclip.copy(f"pwndbg -p {io.pid} -x debug.gdb")
+    		pyperclip.copy("pwndbg -p " + str(io.pid) + " -x debug.gdb")
 
     def b():
     	input("waiting for you to attach gdb, continue?")
