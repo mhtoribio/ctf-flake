@@ -22,7 +22,7 @@ in stdenv.mkDerivation {
     set show-flags on
     python
     import splitmind
-    (splitmind.Mind()
+    (splitmind.Mind(splitter=splitmind.Tmux(cmd="cat -"))
      .right(display="regs")
      .below(of="regs", display="stack")
     ).build()
