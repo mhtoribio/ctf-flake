@@ -12,7 +12,7 @@ in stdenv.mkDerivation {
 
   src = splitmindSrc;
 
-  buildInputs = [ pkgs.python3Packages.setuptools pkgs.makeWrapper ];
+  buildInputs = [ pkgs.python3Packages.setuptools pkgs.makeWrapper pkgs.tmux ];
 
   doCheck = false;
   doInstallCheck = false;
