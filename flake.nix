@@ -10,6 +10,7 @@
     in {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
+          tmux
           gdb
           ltrace
           nasm
