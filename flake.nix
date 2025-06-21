@@ -23,6 +23,8 @@
           curl
           qemu
           musl
+          burpsuite
+          ghidra
           python311Packages.angr
           python311Packages.claripy
           python311Packages.gmpy2
