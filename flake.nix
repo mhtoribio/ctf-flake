@@ -23,6 +23,7 @@
           curl
           qemu
           musl
+          rubyPackages.seccomp-tools
           #burpsuite
           ghidra
           python311Packages.angr
