@@ -1,6 +1,7 @@
 { pkgs, stdenv, gdb ? pkgs.gdb
-, pwndbg # ← require caller to pass the pwndbg derivation
+, pwndbgLauncher # <— require the app-style launcher we created
 }:
+
 let
   splitmindSrc = pkgs.fetchFromGitHub {
     owner = "jerdna-regeiz";
@@ -11,13 +12,9 @@ let
 in stdenv.mkDerivation {
   pname = "gdb-splitmind";
   version = "1.0";
-
   src = splitmindSrc;
 
   buildInputs = [ pkgs.python3Packages.setuptools pkgs.makeWrapper pkgs.tmux ];
-
-  doCheck = false;
-  doInstallCheck = false;
 
   gdbinit = pkgs.writeText "$out/share/gdbinit" ''
     set follow-fork-mode parent
@@ -42,15 +39,9 @@ in stdenv.mkDerivation {
     echo "source $out/share/splitmind/gdbinit.py" > $out/share/gdbinit
     cat $gdbinit >> $out/share/gdbinit
 
-    # Prefer pwndbg’s launcher if present (it is, in upstream flake)
-    if [ -x "${pwndbg}/bin/pwndbg" ]; then
-      makeWrapper ${pwndbg}/bin/pwndbg $out/bin/g \
-        --add-flags "--command=$out/share/gdbinit"
-    else
-      # Fallback: run gdb and source pwndbg’s gdbinit.py directly
-      makeWrapper ${gdb}/bin/gdb $out/bin/g \
-        --add-flags "-q -ex 'source ${pwndbg}/share/pwndbg/gdbinit.py' --command=$out/share/gdbinit"
-    fi
+    # Our final "g" command: pwndbg app + our splitmind gdbinit
+    makeWrapper ${pwndbgLauncher}/bin/pwndbg $out/bin/g \
+      --add-flags "--command=$out/share/gdbinit"
     runHook postInstall
   '';
 }
