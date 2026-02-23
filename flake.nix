@@ -20,8 +20,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
       stdenv = pkgs.stdenv;
 
-      # Use Python 3.12 for your CTF Python packages (angr stack expects this).
-      py = pkgs.python312Packages;
+      py = pkgs.python3Packages;
 
       # Wrapper that runs the *pwndbg app* from the upstream flake in its own closure.
       # This avoids mixing with your shell's Python/capstone.
@@ -56,7 +55,7 @@
           # burpsuite
           ghidra
 
-          # Python (3.12) packages
+          # Python packages
           py.angr
           py.claripy
           py.gmpy2
