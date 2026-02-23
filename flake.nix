@@ -71,7 +71,7 @@
           py.scipy
           py.seccomp
           py.tqdm
-          py.z3
+          py.z3-solver
           py.ropper
 
           # Your local derivations / wrappers
