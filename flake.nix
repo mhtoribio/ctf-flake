@@ -20,7 +20,24 @@
       pkgs = nixpkgs.legacyPackages.${system};
       stdenv = pkgs.stdenv;
 
-      py = pkgs.python3Packages;
+      py = pkgs.python3.withPackages (ps: with ps; [
+            angr
+            claripy
+            gmpy2
+            ipython
+            numpy
+            pillow
+            pwntools
+            pycryptodome
+            pyperclip
+            requests
+            scapy
+            scipy
+            seccomp
+            tqdm
+            z3-solver
+            ropper
+          ]);
 
       # Wrapper that runs the *pwndbg app* from the upstream flake in its own closure.
       # This avoids mixing with your shell's Python/capstone.
@@ -55,23 +72,8 @@
           # burpsuite
           ghidra
 
-          # Python packages
-          py.angr
-          py.claripy
-          py.gmpy2
-          py.ipython
-          py.numpy
-          py.pillow
-          py.pwntools
-          py.pycryptodome
-          py.pyperclip
-          py.requests
-          py.scapy
-          py.scipy
-          py.seccomp
-          py.tqdm
-          py.z3-solver
-          py.ropper
+		  # Python interpreter with packages
+		  py
 
           # Your local derivations / wrappers
           (import ./upload-kernel-exploit.nix { inherit pkgs; })
@@ -84,12 +86,6 @@
           # Put the pwndbg launcher on PATH (calls the upstream flake app)
           pwndbgApp
         ];
-
-        # (Optional) Keep PATH clean; avoid leaking host PYTHONPATH into the shell
-        # This helps ensure angr/pwndbg don't accidentally see host site-packages.
-        shellHook = ''
-          unset PYTHONPATH PYTHONHOME
-        '';
       };
     };
 }
