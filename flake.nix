@@ -76,6 +76,7 @@
 		  py
 
           # Your local derivations / wrappers
+          (import ./get-libs.nix { inherit pkgs; })
           (import ./upload-kernel-exploit.nix { inherit pkgs; })
           (import ./gdb-splitmind.nix {
             inherit pkgs stdenv;
