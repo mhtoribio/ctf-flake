@@ -27,7 +27,7 @@ in stdenv.mkDerivation {
     ).build()
     end
     set context-code-lines 10
-    set context-source-code-lines 5
+    set context-code-lines 5
     set context-stack-lines 12
     set context-sections "args code disasm stack backtrace"
   '';
