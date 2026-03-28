@@ -13,31 +13,38 @@
   #####################
   # Flake outputs
   #####################
-  outputs = { self, nixpkgs, pwndbg }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      pwndbg,
+    }:
     let
       # If you only target x86_64-linux, keep this as-is.
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       stdenv = pkgs.stdenv;
 
-      py = pkgs.python3.withPackages (ps: with ps; [
-            angr
-            claripy
-            gmpy2
-            ipython
-            numpy
-            pillow
-            pwntools
-            pycryptodome
-            pyperclip
-            requests
-            scapy
-            scipy
-            seccomp
-            tqdm
-            z3-solver
-            ropper
-          ]);
+      py = pkgs.python3.withPackages (
+        ps: with ps; [
+          angr
+          claripy
+          gmpy2
+          ipython
+          numpy
+          pillow
+          pwntools
+          pycryptodome
+          pyperclip
+          requests
+          scapy
+          scipy
+          seccomp
+          tqdm
+          z3-solver
+          ropper
+        ]
+      );
 
       # Wrapper that runs the *pwndbg app* from the upstream flake in its own closure.
       # This avoids mixing with your shell's Python/capstone.
@@ -49,7 +56,8 @@
             nix run --accept-flake-config ${pwndbg}#pwndbg -- "$@"
         '';
       };
-    in {
+    in
+    {
       #####################
       # Dev shell
       #####################
@@ -69,11 +77,13 @@
           qemu
           musl
           rubyPackages.seccomp-tools
+          clang
+          llvmPackages.bintools
           # burpsuite
           ghidra
 
-		  # Python interpreter with packages
-		  py
+          # Python interpreter with packages
+          py
 
           # Your local derivations / wrappers
           (import ./get-libs.nix { inherit pkgs; })
