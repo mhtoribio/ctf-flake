@@ -1,5 +1,8 @@
-{ pkgs, stdenv, gdb ? pkgs.gdb
-, pwndbgLauncher # <— require the app-style launcher we created
+{
+  pkgs,
+  stdenv,
+  gdb ? pkgs.gdb,
+  pwndbgLauncher, # <— require the app-style launcher we created
 }:
 
 let
@@ -7,14 +10,19 @@ let
     owner = "jerdna-regeiz";
     repo = "splitmind";
     rev = "master";
-    sha256 = "RsPU8tmBjQevAdGU5WgPRsxvPe5gZ+TU07Ol4oYCWaU=";
+    sha256 = "K6P77ULnKjEYmcdys9nv+yqjWH8qWDAi5qylvWEdp/U=";
   };
-in stdenv.mkDerivation {
+in
+stdenv.mkDerivation {
   pname = "gdb-splitmind";
   version = "1.0";
   src = splitmindSrc;
 
-  buildInputs = [ pkgs.python3Packages.setuptools pkgs.makeWrapper pkgs.tmux ];
+  buildInputs = [
+    pkgs.python3Packages.setuptools
+    pkgs.makeWrapper
+    pkgs.tmux
+  ];
 
   gdbinit = pkgs.writeText "$out/share/gdbinit" ''
     set follow-fork-mode parent
