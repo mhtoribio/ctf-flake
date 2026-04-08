@@ -46,6 +46,8 @@
         ]
       );
 
+      ghidraMcpBridge = import ./ghidra-mcp-bridge.nix { inherit pkgs; };
+
       # Wrapper that runs the *pwndbg app* from the upstream flake in its own closure.
       # This avoids mixing with your shell's Python/capstone.
       pwndbgApp = pkgs.writeShellApplication {
@@ -58,6 +60,8 @@
       };
     in
     {
+      packages.${system}.ghidra-mcp-bridge = ghidraMcpBridge;
+
       #####################
       # Dev shell
       #####################
@@ -96,6 +100,7 @@
 
           # Put the pwndbg launcher on PATH (calls the upstream flake app)
           pwndbgApp
+          ghidraMcpBridge
         ];
       };
     };
